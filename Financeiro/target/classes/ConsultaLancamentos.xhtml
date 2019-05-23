@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{lancamentosBean.consultar}" />
+	</f:metadata>
+
+	<ui:define name="titulo">Consulta de Lançamentos</ui:define>
+
+	<ui:define name="corpo">
+
+		<h2>Consulta de Lançamentos</h2>
+		<h:form>
+			<p:messages showDetail="false" showSummary="true" />
+			<p:dataTable value="#{lancamentosBean.lancamentos}" var="lancamento"
+				border="1" cellspacing="0" cellpadding="2" paginator="true" rows="5"
+				paginatorPosition="bottom">
+				<p:column headerText="#" sortBy="#{lancamento.id}" width="2%">
+					<h:outputText value="#{lancamento.id}" />
+				</p:column>
+				<p:column headerText="Pessoa" sortBy="#{lancamento.pessoa.nome}">
+					<h:outputText value="#{lancamento.pessoa.nome}" />
+				</p:column>
+				<p:column headerText="Descrição">
+					<h:outputText value="#{lancamento.descricao}" />
+				</p:column>
+				<p:column headerText="Tipo" width="10%">
+					<h:outputText value="#{lancamento.tipo.descricao}" />
+				</p:column>
+				<p:column headerText="Valor" style="text-align: right">
+					<h:outputText value="#{lancamento.valor}">
+						<f:convertNumber type="currency" locale="pt_BR" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Vencimento" width="10%"
+					style="text-align: center" sortBy="#{lancamento.dataVencimento}">
+					<h:outputText value="#{lancamento.dataVencimento}">
+						<f:convertDateTime pattern="dd/MM/yy" timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Pagamento" width="10%"
+					style="text-align: center" sortBy="#{lancamento.dataPagamento}">
+					<h:outputText value="#{lancamento.dataPagamento}">
+						<f:convertDateTime pattern="dd/MM/yy" timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Ações" width="10%">
+					<p:button title="Editar" icon="ui-icon-pencil">
+
+					</p:button>
+					<p:commandButton title="Remover" icon="ui-icon-trash"
+						update="@form">
+
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
